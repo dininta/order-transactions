@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Coupon extends Model
@@ -21,4 +22,10 @@ class Coupon extends Model
         'start_date',
         'end_date',
     ];
+
+    public static function isValid($id)
+    {
+        $coupon = Coupon::find($id);
+        return ($coupon && Carbon::now()->between($coupon->start_date, $coupon->end_date));
+    }
 }

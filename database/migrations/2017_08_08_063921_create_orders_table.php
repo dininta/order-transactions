@@ -18,7 +18,9 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->tinyInteger('status');
             $table->string('reason')->nullable();
-            $table->string('payment_proof', 500);
+            $table->string('payment_proof', 500)->nullable();
+            $table->integer('coupon_id')->unsigned()->nullable();
+            $table->integer('total_price')->unsigned();
             $table->string('name', 50);
             $table->string('email', 50);
             $table->string('phone_number', 50);
@@ -29,6 +31,11 @@ class CreateOrdersTable extends Migration
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
+
+            $table->foreign('coupon_id')
+                  ->references('id')
+                  ->on('coupons')
+                  ->onDelete('set null');
         });
     }
 

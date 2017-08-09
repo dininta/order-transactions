@@ -16,6 +16,6 @@ use Illuminate\Http\Request;
 Route::group(['namespace' => 'Api'], function () {
     Route::post('login', [ 'uses' => 'UserController@login']);
     Route::group(['middleware' => 'jwt.auth'], function () {
-        
+        Route::resource('orders', 'OrderController', ['only' => ['store', 'show', 'index']]);
     });
 });

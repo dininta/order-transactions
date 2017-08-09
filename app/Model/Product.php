@@ -12,4 +12,10 @@ class Product extends Model
         'price',
         'quantity',
     ];
+
+    public static function isValid($id, $quantity)
+    {
+        $product = Product::find($id);
+        return ($product->quantity > $quantity);
+    }
 }
