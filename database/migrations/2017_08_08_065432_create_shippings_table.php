@@ -14,10 +14,12 @@ class CreateShippingsTable extends Migration
     public function up()
     {
         Schema::create('shippings', function (Blueprint $table) {
-            $table->string('id');
+            $table->string('id', 20)->unique();
             $table->integer('order_id')->unsigned();
             $table->string('status');
             $table->timestamps();
+
+            $table->primary('id');
 
             $table->foreign('order_id')
                   ->references('id')->on('orders')

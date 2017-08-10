@@ -49,21 +49,26 @@ class Order extends Model
                     ->withPivot('quantity');
     }
 
-    public function calculatePrice($form)
+    public function shipping()
+    {
+        return $this->hasOne(Shipping::class);
+    }
+
+    public function calculatePrice($products, $couponCode = null)
     {
         $total = 0;
-        foreach ($form['products'] as $item) {
-            $total += Product::find($item['id'])->price * $item['quantity'];
+        foreach ($products as $product) {
+            $total += Product::find($product['id'])->price * $product['quantity'];
         }
-        if (array_key_exists('coupon_id', $form)) {
-            $coupon = Coupon::find($form['coupon_id']);
+        if ($couponCode) {
+            $coupon = Coupon::where('code', $couponCode)->first();
             if ($coupon->amount_type == Coupon::PERCENTAGE) {
-                $total *= 1 - $coupon->amount;
+                $total *= 1 - $coupon->amount/100;
             } else {
                 $total -= $coupon->amount;
             }
         }
 
-        $this->total_price = $total;
+        $this->total_price = (int) $total;
     }
 }
