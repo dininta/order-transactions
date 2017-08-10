@@ -10,6 +10,38 @@ use Response;
 
 class UserController extends Controller
 {
+    public function register(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 401,
+                'message' => $validator->errors(),
+                'result' => null
+            ]);
+        }
+
+        $credentials = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        $user = User::create($credentials);
+        $token = JWTAuth::fromUser($user);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'User successfully registered!',
+            'result' => ['token' => $token]
+        ]);
+    }
+
     public function login(Request $request)
     {
         $validator = \Validator::make($request->all(), [
