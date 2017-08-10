@@ -30,4 +30,4 @@ $ php artisan serve
 
 # Command List
 
-- Create username and password for admin `php artisan user:new-admin [name] [email] [password]`
+- Create new admin `php artisan user:new-admin [name] [email] [password]`
