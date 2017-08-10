@@ -25,4 +25,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function isAdmin()
+    {
+        return $this->group_type === static::ADMIN;
+    }
 }
