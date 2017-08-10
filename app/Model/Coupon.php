@@ -16,6 +16,7 @@ class Coupon extends Model
     protected $fillable = [
         'name',
         'description',
+        'code',
         'amount',
         'amount_type',
         'quantity',
@@ -23,9 +24,14 @@ class Coupon extends Model
         'end_date',
     ];
 
-    public static function isValid($id)
+    protected $dates = [
+        'start_date',
+        'end_date'
+    ];
+
+    public static function isValid($code)
     {
-        $coupon = Coupon::find($id);
+        $coupon = Coupon::where('code', $code)->first();
         return ($coupon && Carbon::now()->between($coupon->start_date, $coupon->end_date));
     }
 }

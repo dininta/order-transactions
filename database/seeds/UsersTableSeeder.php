@@ -24,8 +24,16 @@ class UsersTableSeeder extends Seeder
             'updated_at' => \Carbon\Carbon::now()
         ],
         [
-            'name' => 'Customer',
-            'email' => 'customer@customer.com',
+            'name' => 'Customer 1',
+            'email' => 'customer1@customer.com',
+            'password' => bcrypt('secret'),
+            'group_type' => User::CUSTOMER,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ],
+        [
+            'name' => 'Customer 2',
+            'email' => 'customer2@customer.com',
             'password' => bcrypt('secret'),
             'group_type' => User::CUSTOMER,
             'created_at' => \Carbon\Carbon::now(),
