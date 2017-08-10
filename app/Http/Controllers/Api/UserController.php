@@ -44,4 +44,15 @@ class UserController extends Controller
             'result' => null
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        JWTAuth::invalidate();
+
+        return [
+            'status' => 200,
+            'message' => 'Successfully logged out the user!',
+            'result' => null
+        ];        
+    }
 }
